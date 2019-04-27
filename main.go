@@ -3,6 +3,12 @@ package main
 import (
 	"fmt"
 	"github.com/docopt/docopt-go"
+	"io/ioutil"
+	"net/http"
+)
+
+const(
+	version string = "0.1"
 )
 
 func main() {
@@ -19,6 +25,30 @@ Options:
   --max=<numurls>  Stop crawling after fetching <numurls> URLs.`
 
 	arguments, err := docopt.ParseDoc(usage)
-	fmt.Println(arguments)
-	fmt.Println(err)
+	if err != nil {
+		panic(err)
+	}
+
+	versionArg, err := arguments.Bool("--version")
+	if err == nil && versionArg {
+		fmt.Printf("gora version %s", version)
+	}
+
+	url, err := arguments.String("<url>")
+	if err != nil {
+		fmt.Println(usage)
+		return
+	}
+
+	response, err := http.Get(url)
+	if err != nil {
+		fmt.Printf("Could not get %s, error: %s", url, err)
+	}
+
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		fmt.Printf("Could not read body of %s, error: %s", url, err)
+	}
+
+	fmt.Print(string(body))
 }
