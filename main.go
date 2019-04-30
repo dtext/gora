@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/docopt/docopt-go"
-	"io/ioutil"
-	"net/http"
 )
 
 const(
@@ -39,16 +37,4 @@ Options:
 		fmt.Println(usage)
 		return
 	}
-
-	response, err := http.Get(url)
-	if err != nil {
-		fmt.Printf("Could not get %s, error: %s", url, err)
-	}
-
-	body, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		fmt.Printf("Could not read body of %s, error: %s", url, err)
-	}
-
-	fmt.Print(string(body))
 }
