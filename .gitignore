@@ -1,3 +1,6 @@
+# Main executable
+gora
+
 # IntelliJ Project Files
 .idea/
 *.iml
