@@ -3,23 +3,11 @@ package main
 import (
 	"fmt"
 	"github.com/docopt/docopt-go"
-	"strings"
 )
 
-const(
+const (
 	version string = "0.1"
 )
-
-func (w *Website) String() string {
-	var sb strings.Builder
-	sb.WriteString(w.Url)
-	sb.WriteString(" links the following websites:\n")
-	for _, link := range w.LinkedSites {
-		sb.WriteString("  ")
-		sb.WriteString(link.Url)
-	}
-	return sb.String()
-}
 
 func main() {
 	usage := `gora, the web explorer. Starting from a given URL, crawls the web and creates a graph model of connected sites.
@@ -51,7 +39,6 @@ Options:
 		return
 	}
 
-
 	fmt.Printf("Starting from: %v\n", url)
 	limit, _ := arguments.Int("--max")
 	timeout, _ := arguments.Int("--timeout")
@@ -66,7 +53,7 @@ Options:
 	})
 	fmt.Printf("The Web, starting from %s\n\n", url)
 	for _, website := range web {
-		fmt.Println(website)
+		fmt.Printf("%s\n", website)
 	}
 
 }
